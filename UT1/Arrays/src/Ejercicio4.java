@@ -1,22 +1,12 @@
 /*
- * 3. Escribe un programa que pida 10 números enteros por teclado, los almacene en un array, y a continuación
- *  muestre un menú en el que permita:
- *  - Mostrar esos elementos.
- *  - Mostrar esos elementos en orden inverso al que fueron introducidos.
- *  - Comprobar si un número existe. Si existe se mostrará la posición del número en el array, y si no existe
- * lo indicará.
- *  - Consultar cuál es el máximo y el mínimo, y en qué posición están.
- *  - Consultar cuántos números superan un valor concreto.
- *
- * Se debe implementar mediante funciones. En el caso de la búsqueda, la función deberá devolver -1 si el
- * elemento no existe. Las funciones para localizar un número, obtener la posición, calcular el mínimo o el máximo…
- * deben devolver valores, no imprimirlos.
+ * 4. A partir del ejercicio 3, añade la opción de imprimir los elementos que superan un valor concreto,
+ *  su valor máximo y su valor mínimo.
  */
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Ejercicio3 {
+public class Ejercicio4 {
     public static void main(String[] args) {
         final int TAMANO_ARRAY = 10;
         int[] arrayNumeros = new int[TAMANO_ARRAY];
@@ -30,10 +20,11 @@ public class Ejercicio3 {
             System.out.println("3. Consultar posición de número");
             System.out.println("4. Consultar posición de máximo y mínimo");
             System.out.println("5. Buscar números superiores");
+            System.out.println("6. Imprimir números superiores");
             System.out.println("");
             System.out.println("0. Salir");
             System.out.println("");
-            opcion = pideEnteroAcotado("Escoja una opción", "Debe introducir una opción entre 0 y 5",0, 5);
+            opcion = pideEnteroAcotado("Escoja una opción", "Debe introducir una opción entre 0 y 6",0, 6);
             switch (opcion) {
                 case 1:
                     imprimeArray(arrayNumeros);
@@ -50,8 +41,34 @@ public class Ejercicio3 {
                 case 5:
                     ejecutarOpcionContarNumerosMayores(arrayNumeros);
                     break;
+                case 6:
+                    ejecutarOpcionImprimirNumerosSuperiores(arrayNumeros);
+                    break;
             }
-        } while (opcion >= 1 && opcion <= 5);
+        } while (opcion >= 1 && opcion <= 6);
+    }
+
+    public static void ejecutarOpcionImprimirNumerosSuperiores(int[] arrayNumeros){
+        int numeroASuperar = 0;
+        numeroASuperar = pideEntero("Introduce el número a superar: ", "Debe introducir un número entero");
+        int[] numerosMayores = obtenerNumerosMayoresQue(arrayNumeros, numeroASuperar);
+        imprimeArray(numerosMayores);
+        System.out.println("El valor máximo es " + getMaximo(numerosMayores));
+        System.out.println("El valor minimo es " + getMinimo(numerosMayores));
+    }
+
+
+    public static int[] obtenerNumerosMayoresQue(int[] arrayNumeros, int numeroASuperar) {
+        int cantidadNumerosMayores = contarNumerosMayoresQue(arrayNumeros, numeroASuperar);
+        int[] numerosMayores = new int[cantidadNumerosMayores];
+        int j = 0;
+        for (int i = 0; i < arrayNumeros.length; i++) {
+            if (arrayNumeros[i] > numeroASuperar) {
+                numerosMayores[j] = arrayNumeros[i];
+                j++;
+            }
+        }
+        return numerosMayores;
     }
 
     public static void ejecutarOpcionContarNumerosMayores(int[] arrayNumeros) {
