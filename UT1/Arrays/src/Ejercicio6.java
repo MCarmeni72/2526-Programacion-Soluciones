@@ -7,7 +7,7 @@ public class Ejercicio6 {
         rellenaArrayPrimos(arrayOriginal, arrayPrimos);
         System.out.println("ARRAY ORIGINAL: ");
         muestraArray(arrayOriginal);
-        System.out.println("\nARRAY DE PRIMOS: ");
+        System.out.println("ARRAY DE PRIMOS: ");
         muestraArray(arrayPrimos);
 
     }
@@ -64,6 +64,7 @@ public class Ejercicio6 {
         for(int i=0; i<array.length; i++){
             System.out.print(array[i]+" ");
         }
+        System.out.println("");
     }
 
 
