@@ -10,7 +10,7 @@ public class Ejecutable {
         System.out.println(estudiante4);*/
 
         Libro libro1 = new Libro("123456");
-        Libro libro2 = new Libro()
+        //Libro libro2 = new Libro();
 
 
 
