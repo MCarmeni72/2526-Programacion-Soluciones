@@ -10,7 +10,7 @@ Mostrar como resultado un mensaje que indique el sueldo base, la bonificación y
 */
 import java.util.Scanner;
 
-public class Ejercicio4Switch{
+public class Ejercicio4SwitchB{
 	public static void main(String[] args) {
 		Scanner teclado = new Scanner(System.in);
 		double sueldoBase = 0;
