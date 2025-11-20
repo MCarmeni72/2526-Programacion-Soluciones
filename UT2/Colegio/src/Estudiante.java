@@ -4,12 +4,7 @@ public class Estudiante {
     private String tlf;
     private String email;
 
-    public Estudiante() {
-        nombre = "";
-        dni = "";
-        tlf = "";
-        email = "";
-    }
+
 
     public Estudiante(String dni) {
         this.dni = dni;
