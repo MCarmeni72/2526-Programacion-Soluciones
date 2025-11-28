@@ -1,13 +1,15 @@
 public class Ejecutable {
     public static void main(String[] args) {
-       Estudiante e1 = new Estudiante("225R","Juan","957","j@j.es");
-       Estudiante e2 = new Estudiante("369X","Antonio","957","j@j.es");
-       Estudiante e3 = new Estudiante("857W","Andrea","478","andrea@a.es");
-       Estudiante e4 = new Estudiante("159B","Luis","478","luis@a.es");
+       Estudiante e1 = new Estudiante("12345678R","Juan","957","j@j.es");
+       Estudiante e2 = new Estudiante("22222222X","Antonio","957","j@j.es");
+       Estudiante e3 = new Estudiante("11111111W","Andrea","478","andrea@a.es");
+       Estudiante e4 = new Estudiante("98765432D","Luis","478","luis@a.es");
 
-       Estudiante e5 = new Estudiante("471Q","Maria","1547","maria@a.es");
+       Estudiante e5 = new Estudiante("47112312Q","Maria","1547","maria@a.es");
 
        Estudiante e6 = null;
+
+       Estudiante estudianteBuscado = null;
 
       // Estudiante [] arrayEstudiantes = {e1,e2,e3,e4};
 
@@ -33,7 +35,19 @@ public class Ejecutable {
             System.out.println("El alumno  No se ha insertardo");
         }
 
+        estudianteBuscado = (curso1.obtenerEstudiantePorDNI("22222222X"));
+        if (estudianteBuscado != null) {
+            System.out.println("El estudiante buscado es " + estudianteBuscado.getNombre());
+        } else {
+            System.out.println("El estudiante buscado no existe");
+        }
 
+        estudianteBuscado = curso1.obtenerEstudiantePorDNI("77777777S");
+        if (estudianteBuscado != null) {
+            System.out.println("El estudiante buscado es " + estudianteBuscado.getNombre());
+        } else {
+            System.out.println("El estudiante buscado no existe");
+        }
 
 
 

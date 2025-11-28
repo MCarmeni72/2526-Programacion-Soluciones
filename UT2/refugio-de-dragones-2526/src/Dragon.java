@@ -42,4 +42,29 @@ public class Dragon {
             throw new Exception("El nivel de fuego tiene que estar entre 0 y 10");
         }
     }
+
+    public void lanzarLlamarada() {
+        System.out.println("El dragón " + this.nombre + " ha lanzado una llamarada de nivel " + this.nivelFuego + ".");
+    }
+
+    @Override
+    public String toString() {
+        return "Dragón " + this.nombre + " (Edad: " + this.edad + ", nivelFuego: " + this.nivelFuego + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean esIgual = false;
+
+        if (this == obj) {
+            esIgual = true;
+        } else if (obj instanceof Dragon) {
+            Dragon otroDragon = (Dragon) obj;
+            if (this.nombre.equals(otroDragon.getNombre()) && this.edad == otroDragon.getEdad()) {
+                esIgual = true;
+            }
+        }
+
+        return esIgual;
+    }
 }

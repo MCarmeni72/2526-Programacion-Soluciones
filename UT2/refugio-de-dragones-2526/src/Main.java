@@ -9,12 +9,39 @@ public class Main {
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-        // Crear el dragón Spyro, de 12 años y nivel de fuego 3
+        Dragon dragon2 = null;
+        Dragon dragon3 = null;
+        Dragon dragon4 = null;
         try {
-            Dragon dragon2 = new Dragon("Spyro", 12, 3333);
+            dragon2 = new Dragon("Spyro", 12, 2);
+            dragon3 = new Dragon("Drogón", 11, 3);
+            dragon4 = new Dragon("Drogón", 24, 4);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+        dragon1.lanzarLlamarada();
+        System.out.println(dragon1);
 
+        if (dragon1.equals(dragon2)) {
+            System.out.println("dragon1 y dragon2 son iguales");
+        } else {
+            System.out.println("dragon1 y dragon2 son diferentes");
+        }
+
+        if (dragon1.equals(dragon3)) {
+            System.out.println("dragon1 y dragon3 son iguales");
+        } else {
+            System.out.println("dragon1 y dragon3 son diferentes");
+        }
+
+        if (dragon1.equals(dragon4)) {
+            System.out.println("dragon1 y dragon4 son iguales");
+        } else {
+            System.out.println("dragon1 y dragon4 son diferentes");
+        }
+
+        Guarida miGuarida = new Guarida(5);
+        System.out.println("Capacidad: " + miGuarida.getCapacidad());
+        System.out.println("Plazas libres: " + miGuarida.getPlazasDisponibles());
     }
 }
