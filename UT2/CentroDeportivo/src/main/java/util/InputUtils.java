@@ -1,6 +1,7 @@
 package util;
 
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputUtils {
@@ -19,7 +20,7 @@ public class InputUtils {
                 System.out.print(mensaje);
                 valor = sc.nextInt();
                 esCorrecto = true;
-            } catch (NumberFormatException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("⚠️ Error: debes introducir un número entero.");
                 sc.next();
             }
@@ -53,7 +54,7 @@ public class InputUtils {
                 System.out.print(mensaje);
                 valor = sc.nextDouble();
                 esCorrecto = true;
-            } catch (NumberFormatException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("⚠️ Error: debes introducir un número decimal correcto.");
                 sc.next();
             }

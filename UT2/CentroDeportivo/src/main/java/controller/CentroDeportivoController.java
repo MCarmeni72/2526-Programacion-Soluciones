@@ -47,7 +47,7 @@ public class CentroDeportivoController {
     public boolean eliminarSocio(int idSocio) {
         boolean result = false;
         Socio[] socios = miCentro.getSocios(); //sacamos el array de socios de mi centro
-        if (socios != null && idSocio > 0 && idSocio <= socios.length && socios[idSocio] != null) {
+        if (socios != null && idSocio >= 0 && idSocio <= socios.length && socios[idSocio] != null) {
             Socio socio = socios[idSocio];
             // Quitar al socio de todas las actividades en las que esté
             Actividad[] actividades = miCentro.getActividades();
@@ -68,12 +68,12 @@ public class CentroDeportivoController {
     // ========= ACTIVIDADES =========
 
     /**
-     * registra un actividad si no existe otra con el mismo nombre y nivel
-     * @param nombre
-     * @param duracionMinutos
-     * @param nivel
-     * @param precioMensual
-     * @param numMiembros
+     * Registra una actividad si no existe otra con el mismo nombre y nivel
+     * @param nombre Nombre de la actividad
+     * @param duracionMinutos Duración (en minutos)
+     * @param nivel Nivel de la actividad
+     * @param precioMensual Precio mensual
+     * @param numMiembros Número de miembros permitidos
      * @return true si la ha registrado, false si no la ha registrado
      */
     public boolean registrarActividad(String nombre, int duracionMinutos, String nivel, double precioMensual, int numMiembros) {
@@ -116,7 +116,7 @@ public class CentroDeportivoController {
         Actividad[] actividades = miCentro.getActividades(); // sacamos el array de actividades
 
         // Comprobación de índice + null
-        if (actividades != null && idActividad > 0 && idActividad < actividades.length && actividades[idActividad] != null) {
+        if (actividades != null && idActividad >= 0 && idActividad < actividades.length && actividades[idActividad] != null) {
             Actividad actividad = actividades[idActividad];
 
             // Quitamos esta actividad de todos los socios
