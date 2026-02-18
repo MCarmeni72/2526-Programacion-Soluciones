@@ -19,7 +19,7 @@ public class CentroDeportivoController {
         boolean result = false;  //partimos de que no se puede añadir
         if ((miCentro.getSocio(dni) == null)) {  //comprobamos si existe un socio con el DNI, si no existe
             Socio socio = new Socio(nombre, dni, edad);
-            return miCentro.addSocio(socio);  //devuelve true si lo ha podido añadir a miCentro
+            result = miCentro.addSocio(socio);  //devuelve true si lo ha podido añadir a miCentro
         }
         return result;
 
@@ -58,7 +58,7 @@ public class CentroDeportivoController {
                     }
                 }
             }
-            //eliminamos al socio de la lista de socios de miCentro
+            // Eliminamos al socio de la lista de socios de miCentro
             socios[idSocio] = null;
             result = true;
         }

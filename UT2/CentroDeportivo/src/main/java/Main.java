@@ -1,4 +1,3 @@
-package app;
 
 import controller.CentroDeportivoController;
 import model.CentroDeportivo;
