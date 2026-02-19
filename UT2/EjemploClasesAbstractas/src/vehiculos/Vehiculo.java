@@ -1,3 +1,5 @@
+package vehiculos;
+
 public abstract class Vehiculo {
     private double velocidadMaxima;
 

@@ -1,3 +1,10 @@
+import animales.Animal;
+import animales.Gato;
+import animales.Perro;
+import interfaces.Sonido;
+import vehiculos.CocheCombustion;
+import vehiculos.CocheElectrico;
+
 public class Main {
     static void main() {
         Animal miMascota = new Gato("Misifu");

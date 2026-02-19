@@ -1,3 +1,7 @@
+package animales;
+
+import interfaces.Sonido;
+
 public abstract class Animal implements Sonido {
     private String nombre;
 

@@ -1,3 +1,5 @@
+package vehiculos;
+
 public class CocheElectrico extends Vehiculo  {
     private double capacidadBateria;
 

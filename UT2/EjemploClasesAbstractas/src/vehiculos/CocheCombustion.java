@@ -1,4 +1,9 @@
-public class CocheCombustion extends Vehiculo implements Sonido, Repostable{
+package vehiculos;
+
+import interfaces.Repostable;
+import interfaces.Sonido;
+
+public class CocheCombustion extends Vehiculo implements Sonido, Repostable {
     private double capacidadDeposito;
 
     public double getCapacidadDeposito() {
