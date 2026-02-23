@@ -12,6 +12,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
+        ((HeroeAturdible) personajes[0]).aturdir();
         for (Personaje personaje : personajes) {
             personaje.presentar();
             System.out.println(personaje);

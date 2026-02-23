@@ -1,4 +1,4 @@
-public class Bardo extends Heroe {
+public class Bardo extends HeroeAturdible {
 
     public Bardo(String nombre, String mision) {
         super(nombre, mision);
@@ -9,4 +9,5 @@ public class Bardo extends Heroe {
     public void atacar() {
         System.out.println("¡Entona una canción inspiradora que debilita al enemigo!");
     }
+
 }

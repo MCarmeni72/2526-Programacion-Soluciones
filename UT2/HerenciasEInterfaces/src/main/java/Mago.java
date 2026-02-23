@@ -1,4 +1,4 @@
-public class Mago extends Heroe implements LanzadorHechizos {
+public class Mago extends HeroeAturdible implements LanzadorHechizos {
 
     public Mago(String nombre, String mision) {
         super(nombre, mision);
@@ -14,4 +14,5 @@ public class Mago extends Heroe implements LanzadorHechizos {
     public void lanzarHechizo() {
         System.out.println("¡Dispara una bola de fuego!");
     }
+
 }

@@ -1,4 +1,4 @@
-public class Brujo extends Villano implements LanzadorHechizos {
+public class Brujo extends VillanoAturdible implements LanzadorHechizos {
     public Brujo(String nombre, int nivelMaldad) throws Exception {
         super(nombre, nivelMaldad);
         this.puntosVida = 75;
