@@ -22,7 +22,7 @@ public abstract class HeroeAturdible extends Heroe implements Aturdible {
     @Override
     public String toString() {
         String anexo = "";
-        if (this.estaAturdido()) {
+        if (this.aturdido) {
             anexo = " (Aturdido)";
         }
         return super.toString() + anexo;
