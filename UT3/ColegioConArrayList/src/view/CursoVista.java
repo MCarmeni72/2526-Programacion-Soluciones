@@ -31,6 +31,7 @@ public class CursoVista {
         boolean leido =false;
         String s = null;
         while(!leido){
+            System.out.println(msn);
             s=sc.nextLine();
             if(s.isEmpty()){
                 System.out.println("ERROR: la cadena no puede estar vacía");
@@ -51,11 +52,11 @@ public class CursoVista {
 
     }
 
-    public void muestraMensaje (String msn){
+    public static void muestraMensaje (String msn){
         System.out.println(msn);
     }
 
-    public void muestraListado(List<String> lineas){
+    public static void muestraListado(List<String> lineas){
       if(lineas == null || lineas.isEmpty()){
           System.out.println("No hay elementos");
       }else{
