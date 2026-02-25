@@ -28,6 +28,10 @@ public class Curso {
         this.nombre = nombre;
     }
 
+    public List<Estudiante> getMisEstudiantes (){
+        return this.misEstudiantes;
+    }
+
     //CRUD
 
     /*
@@ -81,6 +85,8 @@ public class Curso {
       if(e==null) return false;
       return misEstudiantes.remove(e);
     }
+
+
 
 
 
