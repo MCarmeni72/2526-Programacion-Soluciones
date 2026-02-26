@@ -21,4 +21,8 @@ public class Agenda {
     public boolean addPersona(Persona p){
         return miAgenda.add(p);
     }
+
+    public List<Persona> getMiAgenda(){
+        return miAgenda;
+    }
 }

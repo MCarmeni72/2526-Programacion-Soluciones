@@ -14,5 +14,13 @@ public class Test2SerializarColeccion {
         a.addPersona(p3);
 
         XMLManager.writeXML(a,"agenda.xml");
+
+        Agenda b = new Agenda();
+        b=XMLManager.readXML(b,"agenda.xml");
+
+        for(Persona p: b.getMiAgenda()){
+            System.out.println(p.getNombre());
+
+        }
     }
 }
