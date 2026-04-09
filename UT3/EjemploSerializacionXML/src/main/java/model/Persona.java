@@ -10,6 +10,16 @@ public class Persona {
     private String nombre;
     private int edad;
 
+    public CategoriaPersona getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaPersona categoria) {
+        this.categoria = categoria;
+    }
+
+    private CategoriaPersona categoria;
+
     //para JaxB es necesario el constructor por defecto
     public Persona(){}
 
