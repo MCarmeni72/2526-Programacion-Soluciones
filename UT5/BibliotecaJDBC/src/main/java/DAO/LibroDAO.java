@@ -1,5 +1,6 @@
 package DAO;
 
+import dataAccess.ConnectionBD;
 import model.Autor;
 import model.Libro;
 
@@ -8,23 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibroDAO {
+    /**
+     * Método que devuelve una lista con todos los libros de un autor especifico
+     *
+     * @param idAutor id del autor
+     * @return lista con todos los libros del autor (o una lista vacía si no hay libros del autor)
+     */
     public static List<Libro> findByIdAutor(int idAutor) {
-        //1. Definir los datos de acceso a la bbdd.
-        String user = "root";
-        String password = "1234";
-        String url = "jdbc:mysql://localhost:3307/biblioteca";
-
         ArrayList<Libro> libros = new ArrayList<>();
 
         //2. Establecer la consulta en un string
-        String query = "SELECT * FROM libro Where idAutor =" + idAutor;
-        //2. Establecer la conexión con la base de datos
+        String query = "SELECT * FROM libro Where idAutor = ?";
         Connection con;
         try {
-            con = DriverManager.getConnection(url, user, password);
+            con = ConnectionBD.getConnection();
             //3. Crear un objeto Statement
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            PreparedStatement st = con.prepareStatement(query);
+            st.setInt(1, idAutor);
+            ResultSet rs = st.executeQuery();
 
             //4. recorrer el resultado, next() devuelve true si hay registro, false si no.
             while (rs.next()) {
@@ -32,8 +34,8 @@ public class LibroDAO {
                 int id = rs.getInt("idLibro");
                 String titulo = rs.getString("titulo");
                 String ISBN = rs.getString("ISBN");
-                //Autor autor = AutorDAO.findById(rs.getInt("idAutor"));
-                Libro libro = new Libro(id,titulo,ISBN);
+                Autor autor = AutorDAO.findById(rs.getInt("idAutor"));
+                Libro libro = new Libro(id, titulo, ISBN, autor);
                 libros.add(libro);
             }
         } catch (SQLException e) {

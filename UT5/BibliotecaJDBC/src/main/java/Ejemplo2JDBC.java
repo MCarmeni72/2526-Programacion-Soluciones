@@ -26,10 +26,15 @@ public class Ejemplo2JDBC {
 
         */
 
-        //probar findByIdAutor de LibroDAO
-        List<Libro> libros = LibroDAO.findByIdAutor(1);
+        //probar findByIdAutor de LibroDAO, sacar una lista de libros por autor
+       List<Libro> libros = LibroDAO.findByIdAutor(1);
         for(Libro l : libros) {
             System.out.println(l);
         }
+
+
+        //probar findById del autor
+      //  Autor autor = AutorDAO.findById(5);
+      //  System.out.println(autor);
     }
 }
