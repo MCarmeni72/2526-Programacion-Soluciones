@@ -213,7 +213,11 @@ public class AutorDAO {
         }
         return updated;
     }
-
+    /**
+     * Método que elimina un autor de la base de datos si existe, buscándolo por su ID.
+     * @param idAutor:  el ID del autor a eliminar
+     * @return true si ha encontrado y eliminado correctamente el autor, false si no se ha podido eliminar
+     */
     public static boolean deleteAutorById(int idAutor) {
         boolean deleted = false;
         if(findById(idAutor)!=null){
