@@ -9,6 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutorDAO {
+    private final static String SQL_ALL = "SELECT * FROM autor";
+    private final static String SQL_FIND_BY_ID = "SELECT * FROM autor where idAutor =?";
+    private final static String SQL_FIND_BY_NAME = "SELECT * FROM autor where nombre =?";
+    private final static String SQL_INSERT = "INSERT INTO autor (nombre) VALUES (?)";
+    private final static String SQL_UPDATE = "UPDATE autor SET nombre = ? WHERE idAutor = ?";
+    private final static String SQL_DELETE = "DELETE FROM autor WHERE idAutor = ?";
+
     /**
      * Versión Lazy del Método que devuelve una lista con todos los autores almacenados en la tabla autor de la bbdd biblioteca,
      * no obtengo la lista de libros de cada autor
@@ -16,20 +23,14 @@ public class AutorDAO {
      * @return lista con todos los autores
      */
     public static List<Autor> findAll() {
-        //1. Definir los datos de acceso a la bbdd.
-
-        //2. Establecer la consulta en un string
-        String query = "SELECT * FROM autor";
-
         Autor autor = null;
         List<Autor> autores = new ArrayList<>();
-        //3. Establecer la conexión con la base de datos
         Connection con;
         try {
             con = ConnectionBD.getConnection();
             //4. Crear un objeto Statement
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            ResultSet rs = st.executeQuery(SQL_ALL);
             while (rs.next()) {
                 int idAutor = rs.getInt("idAutor");
                 String nombreAutor = rs.getString("nombre");
@@ -50,11 +51,6 @@ public class AutorDAO {
      */
 
     public static List<Autor> findAllEager() {
-        //1. Definir los datos de acceso a la bbdd.
-
-        //2. Establecer la consulta en un string
-        String query = "SELECT * FROM autor";
-
         Autor autor = null;
         List<Autor> autores = new ArrayList<>();
         //3. Establecer la conexión con la base de datos
@@ -63,7 +59,7 @@ public class AutorDAO {
             con = ConnectionBD.getConnection();
             //4. Crear un objeto Statement
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            ResultSet rs = st.executeQuery(SQL_ALL);
             while (rs.next()) {
                 int idAutor = rs.getInt("idAutor");
                 String nombreAutor = rs.getString("nombre");
@@ -80,33 +76,6 @@ public class AutorDAO {
     }
 
 
- /*
- //este código permite inyección de código, permitiendo que quien lo use pueda en idAutor meter valores que rompan la BBDD
-
- public static Autor findById(int idAutor){
-        String user = "root";
-        String password = "1234";
-        String url = "jdbc:mysql://localhost:3307/biblioteca";
-
-        String query2 = "SELECT * FROM autor where idAutor ="+idAutor;
-        Connection con;
-        Autor autor = null;
-        try {
-            con = DriverManager.getConnection(url, user, password);
-            Statement st2 = con.createStatement();
-            ResultSet rs2 = st2.executeQuery(query2);
-            if(rs2.next()) {
-                int idAutor2 = rs2.getInt("idAutor");
-                String nombreAutor = rs2.getString("nombre");
-                autor = new Autor(idAutor2, nombreAutor);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return autor;
-    }*/
-
     /**
      * Método que devuelve un objeto Autor por su id, en versión Lazy, ya que no estamos rellanado la lista de libros de ese autor
      *
@@ -115,29 +84,14 @@ public class AutorDAO {
      */
     public static Autor findById(int idAutor) {
         Autor autor = null;
-
-
-        //Así no es la forma mas correcta porque permite inyeccion de código
-        // String sql = "SELECT * FROM autor WHERE idAutor = "+idAutor;
-        //LA FORMA CORRECTA ES CON SENTANCIAS PREPARADAS, donde la ? representa al parámetro
-        String query2 = "SELECT * FROM autor where idAutor =?";
-        Connection con;
-        try {
-            con = ConnectionBD.getConnection();
-            //aqui viene el cambio cuando usamos parámetros. Ahora vamos a usar una clase
-            //que me permite darle un valor a las ? (parámetros), esa clase se llama PreparedStatement
-            PreparedStatement ps = con.prepareStatement(query2);
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_ID)) {
             ps.setInt(1, idAutor);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int idAutor2 = rs.getInt("idAutor");
                 String nombreAutor = rs.getString("nombre");
-                //esta linea siguiente sacará la lista de libros de ese autor, version EAGER
-                // List<Libro> libros = LibroDAO.findByIdAutor(idAutor);
-                // autor = new Autor(idAutor2, nombreAutor,libros);
                 autor = new Autor(idAutor2, nombreAutor);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -153,17 +107,7 @@ public class AutorDAO {
      */
     public static Autor findByIdEager(int idAutor) {
         Autor autor = null;
-
-        //Así no es la forma mas correcta porque permite inyeccion de código
-        // String sql = "SELECT * FROM autor WHERE idAutor = "+idAutor;
-        //LA FORMA CORRECTA ES CON SENTANCIAS PREPARADAS, donde la ? representa al parámetro
-        String query2 = "SELECT * FROM autor where idAutor =?";
-        Connection con;
-        try {
-            con = ConnectionBD.getConnection();
-            //aqui viene el cambio cuando usamos parámetros. Ahora vamos a usar una clase
-            //que me permite darle un valor a las ? (parámetros), esa clase se llama PreparedStatement
-            PreparedStatement ps = con.prepareStatement(query2);
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_ID)) {
             ps.setInt(1, idAutor);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -180,6 +124,108 @@ public class AutorDAO {
         }
         return autor;
 
+    }
+
+    /**
+     * Método que inserta un autor en la tabla autor de la bbdd biblioteca
+     *
+     * @param autor objeto de clase Autor, que tiene los datos de un autor concreto
+     * @return el autor insertado o null si no hay podido insertarlo (está repetido o no tiene datos correctos)
+     */
+    public static Autor addAutor(Autor autor) {
+
+        if ((autor != null) && findByName(autor.getNombre()) == null) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)) {
+                ps.setString(1, autor.getNombre());
+                ps.executeUpdate();
+                //con la siguiente linea, una vez insertado, busco el autor por su nombre para devolverlo
+                //con el id correcto que tiene en la bbdd
+                autor=findByName(autor.getNombre());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            autor = null;
+        }
+        return autor;
+    }
+
+    //otra posibilidad valida de añadir, devolviendo un boolean que me indique si se puede añadir o no
+    public static boolean addAutor1(Autor autor) {
+        boolean added = false;
+        if ((autor != null) && findByName(autor.getNombre()) == null) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)) {
+                ps.setString(1, autor.getNombre());
+                ps.executeUpdate();
+                added = true;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return added;
+    }
+
+    /**
+     * Método que devuelve un objeto autor si lo ha encontrado en la tabla autor de la bbdd, en función de su nombre
+     *
+     * @param nombre cadena que contine el nombre del autor para buscar por él en la BBDD
+     * @return objeto autor si lo ha encontrado, null si no existe el autor con ese nombre en la tabla de la bbdd
+     */
+    private static Autor findByName(String nombre) {
+        Autor autor = null;
+       /* Connection con;
+        try {
+            con = ConnectionBD.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_FIND_BY_NAME);*/
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME)) {
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int idAutor2 = rs.getInt("idAutor");
+                String nombreAutor = rs.getString("nombre");
+                autor = new Autor(idAutor2, nombreAutor);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return autor;
+    }
+
+    /**
+     * Método que modifica el nombre de un autor si existe en la  bbdd
+     * @param autorNuevo: objeto con los datos del nuevo autor
+     * @param autorActual objeto con los datos del autor que se supone ya está en la bbdd
+     * @return true si ha encontrado el autor por su nombre y lo ha modificado, false si no se ha podido modificar
+     */
+    public static boolean updateAutor(Autor autorNuevo, Autor autorActual){
+        boolean updated = false;
+        if((autorActual!=null)&&(autorNuevo!=null)&&findByName(autorActual.getNombre())!=null && findByName(autorNuevo.getNombre())==null){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE)) {
+                ps.setString(1, autorNuevo.getNombre());
+                ps.setInt(2, autorActual.getIdAutor());
+                ps.executeUpdate();
+                updated = true;
+
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    public static boolean deleteAutorById(int idAutor) {
+        boolean deleted = false;
+        if(findById(idAutor)!=null){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_DELETE)) {
+                ps.setInt(1, idAutor);
+                ps.executeUpdate();
+                deleted = true;
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return deleted;
     }
 
 

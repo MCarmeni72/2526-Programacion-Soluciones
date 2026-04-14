@@ -9,7 +9,7 @@ import java.util.List;
 public class Ejemplo2JDBC {
     static void main() {
         //probamos findAll de AutorDAO
-      /*  List<Autor> autores = AutorDAO.findAll();
+       /* List<Autor> autores = AutorDAO.findAllEager();
 
         for (Autor autor : autores) {
             System.out.println(autor);
@@ -27,14 +27,23 @@ public class Ejemplo2JDBC {
         */
 
         //probar findByIdAutor de LibroDAO, sacar una lista de libros por autor
-       List<Libro> libros = LibroDAO.findByIdAutor(1);
+    /*   List<Libro> libros = LibroDAO.findByIdAutor(1);
         for(Libro l : libros) {
             System.out.println(l);
         }
-
+*/
 
         //probar findById del autor
       //  Autor autor = AutorDAO.findById(5);
       //  System.out.println(autor);
+
+        Autor autor = new Autor(4,"Maria Dueñas3");
+        Autor nuevo= new Autor (4,"Miguel de Cervantes");
+        if(AutorDAO.updateAutor(nuevo,autor)){
+            System.out.println("se actualizo");
+        }else{
+            System.out.println("no se actualizo");
+        }
+
     }
 }
