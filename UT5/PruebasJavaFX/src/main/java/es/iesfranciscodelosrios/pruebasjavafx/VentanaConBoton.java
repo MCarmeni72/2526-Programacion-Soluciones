@@ -21,10 +21,7 @@ public class VentanaConBoton extends Application {
         TextField textoNombre = new TextField();
         Button boton = new Button("Haz clic");
 
-        boton.setOnAction(e -> {
-            System.out.println(e.getSource());
-            mensaje.setText("Hola, " + textoNombre.getText() + "!");
-        });
+        boton.setOnAction(e -> mensaje.setText("Hola, " + textoNombre.getText() + "!"));
 
         raiz.getChildren().addAll(mensaje, textoNombre, boton);
 
