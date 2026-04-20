@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.iesfranciscodelosrios.calculadoradivisas.controllers.PrincipalController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Archivo">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Salir" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Ayuda">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Acerca de" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER_LEFT" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="botonConvertir" disable="true" mnemonicParsing="false" onAction="#convertir" text="Convertir" />
+            <Button disable="true" mnemonicParsing="false" text="Limpiar" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <center>
+      <GridPane hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints vgrow="NEVER" />
+            <RowConstraints vgrow="NEVER" />
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+            <Label text="Calculadora de divisas" GridPane.columnSpan="2">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <Label text="Divisa:" GridPane.rowIndex="1" />
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <RadioButton fx:id="opcionDolares" mnemonicParsing="false" selected="true" text="Dólares">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="divisas" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="opcionRublos" mnemonicParsing="false" text="Rublos" toggleGroup="$divisas" />
+                  <RadioButton fx:id="opcionYuanes" mnemonicParsing="false" text="Yuanes" toggleGroup="$divisas" />
+               </children>
+            </VBox>
+            <Label text="Euros:" GridPane.rowIndex="2" />
+            <TextField fx:id="textoEuros" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Divisa seleccionada:" GridPane.rowIndex="3" />
+            <TextField fx:id="textoDivisa" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Region GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+         </padding>
+      </GridPane>
+   </center>
+</BorderPane>

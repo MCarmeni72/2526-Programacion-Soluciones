@@ -1,9 +1,9 @@
-package es.iesfranciscodelosrios.pruebasjavafx;
+package es.iesfranciscodelosrios.calculadoradivisas;
 
 import javafx.application.Application;
 
 public class Launcher {
     public static void main(String[] args) {
-        Application.launch(HelloApplication.class, args);
+        Application.launch(CalculadoraApplication.class, args);
     }
 }
