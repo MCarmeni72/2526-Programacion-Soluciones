@@ -3,10 +3,9 @@ package es.iesfranciscodelosrios.calculadoradivisas.controllers;
 import es.iesfranciscodelosrios.calculadoradivisas.utils.Divisa;
 import es.iesfranciscodelosrios.calculadoradivisas.utils.DivisaUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class PrincipalController {
     @FXML
@@ -21,16 +20,18 @@ public class PrincipalController {
     public TextField textoDivisa;
     @FXML
     public Button botonConvertir;
+    @FXML
+    public Button botonLimpiar;
 
     @FXML
     private void convertir() {
         Divisa divisaSeleccionada = obtenerDivisaSeleccionada();
         if (!textoEuros.getText().isEmpty()) {
-            double cantidad = Double.parseDouble(textoEuros.getText());
+            double cantidad = Double.parseDouble(textoEuros.getText().replace(",", "."));
             double cantidadConvertida = DivisaUtils.convertirADivisa(cantidad, divisaSeleccionada);
             textoDivisa.setText(DivisaUtils.formatearCantidad(cantidadConvertida));
         } else if (!textoDivisa.getText().isEmpty()) {
-            double cantidad = Double.parseDouble(textoDivisa.getText());
+            double cantidad = Double.parseDouble(textoDivisa.getText().replace(",", "."));
             double cantidadConvertida = DivisaUtils.convertirAEuros(cantidad, divisaSeleccionada);
             textoEuros.setText(DivisaUtils.formatearCantidad(cantidadConvertida));
         }
@@ -56,19 +57,51 @@ public class PrincipalController {
         boolean eurosVacio = textoEuros.getText().isEmpty();
         boolean divisaVacia = textoDivisa.getText().isEmpty();
 
-        if ((eurosVacio && !divisaVacia) || (!eurosVacio && divisaVacia)) {
-            botonConvertir.setDisable(false);
-        } else {
-            botonConvertir.setDisable(true);
-        }
+        botonConvertir.setDisable((!eurosVacio || divisaVacia) && (eurosVacio || !divisaVacia));
+
+        botonLimpiar.setDisable(eurosVacio && divisaVacia);
+    }
+
+    @FXML
+    private void limpiar() {
+        textoEuros.setText("");
+        textoDivisa.setText("");
+        opcionDolares.setSelected(true);
+        actualizarBotones();
     }
 
     @FXML
     private void initialize() {
-        textoEuros.textProperty().addListener(
-                (observable, oldValue, newValue) -> actualizarBotones()
-        );
+        controlarCampoNumérico(this.textoEuros);
+        controlarCampoNumérico(this.textoDivisa);
+    }
 
-        textoDivisa.textProperty().addListener((observable, oldValue, newValue) -> actualizarBotones());
+    private void controlarCampoNumérico(TextField campo) {
+        campo.textProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (!newValue.matches("\\d*([.,]\\d*)?")) {
+                        campo.setText(oldValue);
+                    }
+                    actualizarBotones();
+                }
+        );
+    }
+
+    @FXML
+    private void mostrarAcercaDe() {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Acerca de Calculadora de Divisas");
+        alerta.setHeaderText("Calculadora de Divisas");
+        alerta.setContentText("""
+                   Aplicación didáctica realizada con JavaFX, FXML y Maven.
+                   Convierte euros a dólares, rublos o yuanes, y también en sentido inverso.
+                   Versión: 1.0""");
+        alerta.showAndWait();
+    }
+
+    @FXML
+    private void salir() {
+        Stage stage = (Stage) textoEuros.getScene().getWindow();
+        stage.close();
     }
 }
