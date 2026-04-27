@@ -14,7 +14,7 @@ public class GeneradorApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 250);
         stage.setMinHeight(200);
         stage.setMinWidth(360);
-        stage.setTitle("Hello!");
+        stage.setTitle("Generador de frases");
         stage.setScene(scene);
         stage.show();
     }
