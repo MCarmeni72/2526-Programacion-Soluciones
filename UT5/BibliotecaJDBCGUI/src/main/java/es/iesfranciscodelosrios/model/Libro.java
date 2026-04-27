@@ -17,6 +17,11 @@ public class Libro {
         this.ISBN = ISBN;
 
     }
+    public Libro(String titulo, String ISBN, Autor autor) {
+        this.titulo = titulo;
+        this.ISBN = ISBN;
+        this.autor = autor;
+    }
     public int getIdLibro() {
         return idLibro;
     }

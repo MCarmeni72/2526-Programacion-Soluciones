@@ -9,14 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutorDAO {
-    private static final String SQL_ALL = "SELECT * FROM autor";
-    private static final String SQL_FIND_BY_ID = "SELECT * FROM autor where idAutor =?";
-    private static final String SQL_FIND_BY_NAME = "SELECT * FROM autor where nombre =?";
-    private static final String SQL_INSERT = "INSERT INTO autor (nombre) VALUES (?)";
-    private static final String SQL_UPDATE = "UPDATE autor SET nombre = ? WHERE idAutor = ?";
-    private static final String SQL_DELETE = "DELETE FROM autor WHERE idAutor = ?";
-
-    private AutorDAO() {}
+    private final static String SQL_ALL = "SELECT * FROM autor";
+    private final static String SQL_FIND_BY_ID = "SELECT * FROM autor where idAutor =?";
+    private final static String SQL_FIND_BY_NAME = "SELECT * FROM autor where nombre =?";
+    private final static String SQL_INSERT = "INSERT INTO autor (nombre) VALUES (?)";
+    private final static String SQL_UPDATE = "UPDATE autor SET nombre = ? WHERE idAutor = ?";
+    private final static String SQL_DELETE = "DELETE FROM autor WHERE idAutor = ?";
 
     /**
      * Versión Lazy del Método que devuelve una lista con todos los autores almacenados en la tabla autor de la bbdd biblioteca,

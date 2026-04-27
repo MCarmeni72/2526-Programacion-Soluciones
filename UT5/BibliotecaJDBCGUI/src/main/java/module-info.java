@@ -10,4 +10,7 @@ module es.iesfranciscodelosrios.bibliotecajdbcgui {
 
     opens es.iesfranciscodelosrios.bibliotecajdbcgui.controllers to javafx.fxml;
     exports es.iesfranciscodelosrios.bibliotecajdbcgui.controllers;
+
+    opens es.iesfranciscodelosrios.dataaccess to java.xml.bind;
+    exports es.iesfranciscodelosrios.dataaccess;
 }

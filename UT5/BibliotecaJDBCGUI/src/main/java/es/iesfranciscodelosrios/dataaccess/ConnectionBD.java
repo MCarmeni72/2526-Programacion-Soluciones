@@ -12,7 +12,7 @@ public class ConnectionBD {
 
     //2. Constructor privado
     private ConnectionBD() {
-       //leo del connection.xml los datos para la conexion
+        //leo del connection.xml los datos para la conexion
         ConnectionProperties properties = XMLManager.readXML(new ConnectionProperties(), FILE);
         try{
             con = DriverManager.getConnection(properties.getURL(), properties.getUser(), properties.getPassword());
