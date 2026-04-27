@@ -1,60 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.iesfranciscodelosrios.generadordefrases.GeneradorController">
    <MenuBar VBox.vgrow="NEVER">
      <menus>
-       <Menu mnemonicParsing="false" text="File">
+       <Menu mnemonicParsing="false" text="Archivo">
          <items>
-           <MenuItem mnemonicParsing="false" text="Close" />
+           <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
          </items>
        </Menu>
-       <Menu mnemonicParsing="false" text="Edit">
+       <Menu mnemonicParsing="false" text="Ayuda">
          <items>
-           <MenuItem mnemonicParsing="false" text="Delete" />
-         </items>
-       </Menu>
-       <Menu mnemonicParsing="false" text="Help">
-         <items>
-           <MenuItem mnemonicParsing="false" text="About" />
+           <MenuItem mnemonicParsing="false" onAction="#mostrarAcercaDe" text="Acerca de" />
          </items>
        </Menu>
      </menus>
    </MenuBar>
    <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
      <items>
-         <VBox prefHeight="200.0" prefWidth="100.0">
+         <VBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="260.0" spacing="5.0" SplitPane.resizableWithParent="false">
             <children>
-               <Label text="Escoja la frase a repetir" />
-               <RadioButton fx:id="rbPorDefecto" mnemonicParsing="false" selected="true" text="Lorem Ipsum Dolor Sit Amet">
+               <Label text="Escoja la frase a repetir" VBox.vgrow="NEVER" />
+               <RadioButton fx:id="rbPorDefecto" mnemonicParsing="false" selected="true" text="Lorem Ipsum Dolor Sit Amet" VBox.vgrow="NEVER">
                   <toggleGroup>
                      <ToggleGroup fx:id="tipoFrase" />
                   </toggleGroup></RadioButton>
-               <HBox prefHeight="100.0" prefWidth="200.0">
+               <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                   <children>
                      <RadioButton fx:id="rbPersonalizado" mnemonicParsing="false" toggleGroup="$tipoFrase" />
                      <TextField fx:id="txtFrase" disable="true" />
                   </children>
                </HBox>
-               <HBox prefHeight="100.0" prefWidth="200.0">
+               <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                   <children>
                      <Label text="Repeticiones" />
-                     <Spinner fx:id="spnRepeticiones" editable="true">
+                     <Spinner fx:id="spnRepeticiones">
                          <valueFactory>
                              <SpinnerValueFactory.IntegerSpinnerValueFactory initialValue="5" max="100" min="1" />
                          </valueFactory>
                      </Spinner>
                   </children>
                </HBox>
-               <HBox prefHeight="100.0" prefWidth="200.0">
+               <HBox alignment="CENTER_RIGHT" spacing="5.0">
                   <children>
                      <Button fx:id="btnGenerar" mnemonicParsing="false" onAction="#generarFrase" text="Generar" />
                      <Button fx:id="btnLimpiar" disable="true" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
                   </children>
                </HBox>
             </children>
+            <padding>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
          </VBox>
          <TextArea fx:id="taTextoGenerado" editable="false" wrapText="true" />
      </items>

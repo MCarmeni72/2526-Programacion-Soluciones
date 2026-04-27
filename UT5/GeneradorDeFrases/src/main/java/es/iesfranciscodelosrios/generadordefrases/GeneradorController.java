@@ -1,7 +1,9 @@
 package es.iesfranciscodelosrios.generadordefrases;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class GeneradorController {
 
@@ -53,5 +55,21 @@ public class GeneradorController {
     @FXML
     private void limpiar() {
         taTextoGenerado.clear();
+    }
+
+    public void salir(ActionEvent actionEvent) {
+        Stage stage = (Stage) spnRepeticiones.getScene().getWindow();
+        stage.close();
+    }
+
+    public void mostrarAcercaDe(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Acerca de...");
+        alert.setHeaderText("Acerca de Generador de Frases");
+        alert.setContentText("""
+                Generador de Frases 1.0
+                Desarrollado por Alfonso Jiménez
+                """);
+        alert.showAndWait();
     }
 }
