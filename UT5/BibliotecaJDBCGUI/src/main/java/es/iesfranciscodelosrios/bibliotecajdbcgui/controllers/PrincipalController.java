@@ -29,22 +29,23 @@ public class PrincipalController {
 
     @FXML
     private void initialize() {
+        try {
+            ConnectionBD.getInstance().connect();
             cargarLibros();
-
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Fallo al conectar");
+            alert.setContentText("No se ha podido conectar a la Base de datos: " + e.getMessage());
+            alert.show();
+        }
         configurarLista();
 
     }
     private void cargarLibros() {
-        if (ConnectionBD.getConnection() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Fallo al conectar");
-            alert.setContentText("No se ha podido conectar a la Base de datos");
-            alert.show();
-        } else {
-            List<Libro> libros = LibroDAO.findAll();
-            librosListView.setItems(FXCollections.observableList(libros));
-        }
+        List<Libro> libros = LibroDAO.findAll();
+        librosListView.setItems(FXCollections.observableList(libros));
+
     }
 
     private void configurarLista() {

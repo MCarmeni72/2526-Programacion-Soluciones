@@ -23,7 +23,7 @@ public class LibroDAO {
     public static List<Libro> findAll() {
         List<Libro> libros = new ArrayList<>();
 
-        try (Statement st = ConnectionBD.getConnection().createStatement();
+        try (Statement st = ConnectionBD.getInstance().getConnection().createStatement();
              ResultSet rs = st.executeQuery(SQL_FIND_ALL)) {
 
             while (rs.next()) {
@@ -36,29 +36,27 @@ public class LibroDAO {
         return libros;
     }
 
-    public static Libro findById(int idLibro) {
+    public static Libro findById(int idLibro) throws SQLException {
         Libro libro = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_ID)) {
+        try (PreparedStatement ps = ConnectionBD.getInstance().getConnection().prepareStatement(SQL_FIND_BY_ID)) {
             ps.setInt(1, idLibro);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 libro = createLibroFromResultSet(rs);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
         return libro;
     }
 
-    public static Libro addLibro(Libro libro) {
+    public static Libro addLibro(Libro libro) throws SQLException {
         if (!isLibroValido(libro) || findByISBN(libro.getISBN()) != null) {
             return null;
         }
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = ConnectionBD.getInstance().getConnection().prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, libro.getTitulo());
             ps.setString(2, libro.getISBN());
             ps.setInt(3, libro.getAutor().getIdAutor());
@@ -68,14 +66,12 @@ public class LibroDAO {
             if (generatedKeys.next()) {
                 libro.setIdLibro(generatedKeys.getInt(1));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
         return libro;
     }
 
-    public static boolean updateLibro(Libro libroNuevo) {
+    public static boolean updateLibro(Libro libroNuevo) throws SQLException {
         if (!isLibroValido(libroNuevo)) {
             return false;
         }
@@ -90,39 +86,35 @@ public class LibroDAO {
             return false;
         }
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE)) {
+        try (PreparedStatement ps = ConnectionBD.getInstance().getConnection().prepareStatement(SQL_UPDATE)) {
             ps.setString(1, libroNuevo.getTitulo());
             ps.setString(2, libroNuevo.getISBN());
             ps.setInt(3, libroNuevo.getAutor().getIdAutor());
             ps.setInt(4, libroNuevo.getIdLibro());
             ps.executeUpdate();
             return true;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    public static boolean deleteLibroById(int idLibro) {
+    public static boolean deleteLibroById(int idLibro) throws SQLException {
         if (findById(idLibro) == null) {
             return false;
         }
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_DELETE)) {
+        try (PreparedStatement ps = ConnectionBD.getInstance().getConnection().prepareStatement(SQL_DELETE)) {
             ps.setInt(1, idLibro);
             ps.executeUpdate();
             return true;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
     /**
      * Método que devuelve una lista con todos los libros de un autor especifico.
      */
-    public static List<Libro> findByIdAutor(int idAutor) {
+    public static List<Libro> findByIdAutor(int idAutor) throws SQLException {
         ArrayList<Libro> libros = new ArrayList<>();
 
-        try (PreparedStatement st = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_ID_AUTOR)) {
+        try (PreparedStatement st = ConnectionBD.getInstance().getConnection().prepareStatement(SQL_FIND_BY_ID_AUTOR)) {
             st.setInt(1, idAutor);
             ResultSet rs = st.executeQuery();
 
@@ -134,8 +126,6 @@ public class LibroDAO {
                 Libro libro = new Libro(id, titulo, isbn, autor);
                 libros.add(libro);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return libros;
     }
@@ -143,7 +133,7 @@ public class LibroDAO {
     private static Libro findByISBN(String isbn) {
         Libro libro = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_ISBN)) {
+        try (PreparedStatement ps = ConnectionBD.getInstance().getConnection().prepareStatement(SQL_FIND_BY_ISBN)) {
             ps.setString(1, isbn);
             ResultSet rs = ps.executeQuery();
 
