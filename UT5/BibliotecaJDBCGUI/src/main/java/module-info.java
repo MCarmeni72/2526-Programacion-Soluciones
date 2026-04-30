@@ -4,6 +4,9 @@ module es.iesfranciscodelosrios.bibliotecajdbcgui {
     requires java.xml.bind;
     requires java.sql;
 
+    requires org.controlsfx.controls;
+    requires org.kordamp.bootstrapfx.core;
+
 
     opens es.iesfranciscodelosrios.bibliotecajdbcgui to javafx.fxml;
     exports es.iesfranciscodelosrios.bibliotecajdbcgui;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -28,10 +29,21 @@
                 </padding>
                 <Label styleClass="screen-title" text="Biblioteca - Gestión de libros" />
                 <HBox spacing="10">
-                    <Button onAction="#anadirNuevoLibro" text="Nuevo" />
-                    <Button text="Editar" />
-                    <Button styleClass="danger-button" text="Eliminar" />
-                    <Button onAction="#recargar" text="Recargar" />
+                    <Button onAction="#anadirNuevoLibro" styleClass="btn" text="Nuevo" />
+                    <Button onAction="#editarLibroSeleccionado" styleClass="btn" text="Editar" />
+                    <Button onAction="#eliminarLibroSeleccionado" text="Eliminar">
+                  <styleClass>
+                     <String fx:value="btn" />
+                     <String fx:value="btn-danger" />
+                  </styleClass></Button>
+                    <Button onAction="#recargar" styleClass="btn" text="Recargar" />
+               <styleClass>
+                  <String fx:value="panel" />
+                  <String fx:value="panel-primary" />
+               </styleClass>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
                 </HBox>
             </VBox>
         </VBox>
