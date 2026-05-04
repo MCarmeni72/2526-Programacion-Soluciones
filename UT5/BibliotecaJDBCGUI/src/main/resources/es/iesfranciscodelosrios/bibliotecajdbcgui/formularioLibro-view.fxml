@@ -1,31 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.iesfranciscodelosrios.bibliotecajdbcgui.controllers.FormularioLibroController">
+<VBox prefHeight="186.0" prefWidth="420" spacing="12" styleClass="panel-box" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.iesfranciscodelosrios.bibliotecajdbcgui.controller.FormularioLibroController">
+
+    <padding>
+        <Insets bottom="18" left="18" right="18" top="18" />
+    </padding>
+
+    <Label fx:id="tituloFormularioLabel" text="Nuevo libro">
+      <styleClass>
+         <String fx:value="section-title" />
+         <String fx:value="h3" />
+      </styleClass></Label>
+
+    <GridPane hgap="10" vgap="12">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints minWidth="90" />
+            <ColumnConstraints hgrow="ALWAYS" />
         </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-   <children>
-      <Label text="Título" />
-      <Label text="Autor" GridPane.rowIndex="1" />
-      <Label text="ISBN" GridPane.rowIndex="2" />
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
-         <children>
-            <Button mnemonicParsing="false" text="Cancelar" />
-            <Button mnemonicParsing="false" onAction="#guardarLibro" text="Guardar" />
-         </children>
-      </HBox>
-      <TextField fx:id="txtTitulo" GridPane.columnIndex="1" />
-      <TextField fx:id="txtISBN" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <ComboBox fx:id="cmbAutor" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-   </children>
-      </GridPane>
+
+        <Label styleClass="field-label" text="Título:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="txtTitulo" promptText="Introduce el título" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label styleClass="field-label" text="ISBN:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="txtISBN" promptText="Introduce el ISBN" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+        <Label styleClass="field-label" text="Autor:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <ComboBox fx:id="cmbAutor" maxWidth="1.7976931348623157E308" promptText="Selecciona un autor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+
+    <HBox alignment="CENTER_RIGHT" spacing="10">
+        <Button onAction="#cerrarVentana" text="Cancelar">
+         <styleClass>
+            <String fx:value="btn" />
+            <String fx:value="btn-danger" />
+         </styleClass></Button>
+        <Button fx:id="btnGuardar" defaultButton="true" onAction="#guardarLibro" text="Guardar">
+         <styleClass>
+            <String fx:value="btn" />
+            <String fx:value="btn-success" />
+         </styleClass></Button>
+    </HBox>
+</VBox>

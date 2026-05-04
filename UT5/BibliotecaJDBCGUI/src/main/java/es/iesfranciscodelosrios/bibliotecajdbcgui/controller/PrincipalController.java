@@ -1,4 +1,4 @@
-package es.iesfranciscodelosrios.bibliotecajdbcgui.controllers;
+package es.iesfranciscodelosrios.bibliotecajdbcgui.controller;
 
 import es.iesfranciscodelosrios.bibliotecajdbcgui.PrincipalApplication;
 import es.iesfranciscodelosrios.bibliotecajdbcgui.utils.Utils;
@@ -21,22 +21,37 @@ import java.util.List;
 import java.util.Optional;
 
 public class PrincipalController {
+    @FXML
     public ListView<Libro> librosListView;
+    @FXML
     public Label detalleIdLabel;
+    @FXML
     public Label detalleTituloLabel;
+    @FXML
     public Label detalleIsbnLabel;
+    @FXML
     public Label detalleAutorLabel;
+    @FXML
+    public Button btnNuevo;
+    @FXML
+    public Button btnRecargar;
+    @FXML
+    public Button btnEditar;
+    @FXML
+    public Button btnEliminar;
 
     @FXML
     private void initialize() {
+        configurarLista();
         try {
             ConnectionBD.getInstance().connect();
             cargarLibros();
+            btnNuevo.setDisable(false);
+            btnRecargar.setDisable(false);
+            
         } catch (SQLException e) {
-            Utils.mostrarError("Error", "Error de conexión", "No se ha podido conectar a la Base de datos: " + e.getMessage());
+            Utils.mostrarDialogo("Error", "Error de conexión", "No se ha podido conectar a la Base de datos: " + e.getMessage(), Alert.AlertType.ERROR);
         }
-        configurarLista();
-
     }
 
     private void cargarLibros() {
@@ -63,6 +78,9 @@ public class PrincipalController {
         librosListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         mostrarLibroEnPanel((Libro) newValue);
         });
+        librosListView.setPlaceholder(new Label("No hay libros para mostrar"));
+        btnEliminar.disableProperty().bind(librosListView.getSelectionModel().selectedItemProperty().isNull());
+        btnEditar.disableProperty().bind(librosListView.getSelectionModel().selectedItemProperty().isNull());
     }
 
     private void mostrarLibroEnPanel(Libro libro) {
@@ -100,7 +118,7 @@ public class PrincipalController {
             stage.setResizable(false);
             stage.showAndWait();
         } catch (IOException e) {
-            Utils.mostrarError("Error", "Error al cargar el formulario", "No se ha podido cargar el formulario: " + e.getMessage());
+            Utils.mostrarDialogo("Error", "Error al cargar el formulario", "No se ha podido cargar el formulario: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -115,23 +133,20 @@ public class PrincipalController {
         // Obtener el libro seleccionado
         Libro libro = librosListView.getSelectionModel().getSelectedItem();
         if (libro == null) {
-            Utils.mostrarError("Error", "No hay libro seleccionado", "Debe seleccionar un libro para eliminar");
+            Utils.mostrarDialogo("Error", "No hay libro seleccionado", "Debe seleccionar un libro para eliminar", Alert.AlertType.ERROR);
             return;
         }
         // Vamos a confirmar que se quiera borrar
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle("Confirmar borrado");
-        alerta.setHeaderText("Confirmar borrado del libro");
-        alerta.setContentText("¿Está seguro de que desea eliminar el libro '" + libro.getTitulo() + "'?");
-        Optional<ButtonType> respuesta = alerta.showAndWait();
+        Optional<ButtonType> respuesta = Utils.mostrarDialogo("Confirmar borrado", "Confirmar borrado del libro", "¿Está seguro de que desea eliminar el libro '" + libro.getTitulo() + "'?", Alert.AlertType.CONFIRMATION);
         if (respuesta.isPresent() && respuesta.get() == ButtonType.OK) {
             try {
                 // borramos de la BD
                 LibroDAO.deleteLibroById(libro.getIdLibro());
                 // Borramos de nuestra lista.
                 librosListView.getItems().remove(libro);
+                librosListView.getSelectionModel().clearSelection();
             } catch (SQLException e) {
-                Utils.mostrarError("Error", "Error de base de datos", "No se ha podido borrar el libro en la BD: " + e.getMessage());
+                Utils.mostrarDialogo("Error", "Error de base de datos", "No se ha podido borrar el libro en la BD: " + e.getMessage(), Alert.AlertType.ERROR);
             }
         }
     }
@@ -141,11 +156,23 @@ public class PrincipalController {
         // Obtener el libro seleccionado
         Libro libro = librosListView.getSelectionModel().getSelectedItem();
         if (libro == null) {
-            Utils.mostrarError("Error", "No hay libro seleccionado", "Debe seleccionar un libro para eliminar");
+            Utils.mostrarDialogo("Error", "No hay libro seleccionado", "Debe seleccionar un libro para eliminar", Alert.AlertType.ERROR);
             return;
         }
 
         abrirFormulario(libro);
         cargarLibros();
+        librosListView.getSelectionModel().select(libro);
+    }
+
+    @FXML
+    public void cerrarVentana(ActionEvent actionEvent) {
+        Stage stage = (Stage) btnNuevo.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void mostrarAcercaDe(ActionEvent actionEvent) {
+        Utils.mostrarDialogo("Acerca de", "Biblioteca - CRUD de libros", "Autor: Alfonso\nVersión: 1.0\nTecnología: JavaFX + JDBC", Alert.AlertType.INFORMATION);
     }
 }

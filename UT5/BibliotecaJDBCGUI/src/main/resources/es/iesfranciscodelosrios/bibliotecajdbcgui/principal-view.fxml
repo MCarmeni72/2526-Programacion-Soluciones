@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="640" prefWidth="960" styleClass="root-pane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.iesfranciscodelosrios.bibliotecajdbcgui.controllers.PrincipalController">
+<BorderPane prefHeight="640" prefWidth="960" styleClass="root-pane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.iesfranciscodelosrios.bibliotecajdbcgui.controller.PrincipalController">
 
     <top>
         <VBox spacing="0">
@@ -13,38 +13,44 @@
                 <menus>
                     <Menu text="Archivo">
                         <items>
-                            <MenuItem text="Salir" />
+                            <MenuItem onAction="#cerrarVentana" text="Salir" />
                         </items>
                     </Menu>
                     <Menu text="Ayuda">
                         <items>
-                            <MenuItem text="Acerca de" />
+                            <MenuItem onAction="#mostrarAcercaDe" text="Acerca de" />
                         </items>
                     </Menu>
                 </menus>
             </MenuBar>
-            <VBox spacing="10" styleClass="header-box">
+            <VBox spacing="10">
                 <padding>
                     <Insets bottom="16" left="16" right="16" top="16" />
                 </padding>
-                <Label styleClass="screen-title" text="Biblioteca - Gestión de libros" />
+                <Label text="Biblioteca - Gestión de libros">
+               <styleClass>
+                  <String fx:value="screen-title" />
+                  <String fx:value="h1" />
+               </styleClass></Label>
                 <HBox spacing="10">
-                    <Button onAction="#anadirNuevoLibro" styleClass="btn" text="Nuevo" />
-                    <Button onAction="#editarLibroSeleccionado" styleClass="btn" text="Editar" />
-                    <Button onAction="#eliminarLibroSeleccionado" text="Eliminar">
+                    <Button fx:id="btnNuevo" disable="true" onAction="#anadirNuevoLibro" styleClass="btn" text="Nuevo" />
+                    <Button fx:id="btnEditar" disable="true" onAction="#editarLibroSeleccionado" styleClass="btn" text="Editar" />
+                    <Button fx:id="btnEliminar" disable="true" onAction="#eliminarLibroSeleccionado" text="Eliminar">
                   <styleClass>
                      <String fx:value="btn" />
                      <String fx:value="btn-danger" />
                   </styleClass></Button>
-                    <Button onAction="#recargar" styleClass="btn" text="Recargar" />
-               <styleClass>
-                  <String fx:value="panel" />
-                  <String fx:value="panel-primary" />
-               </styleClass>
+               <Region HBox.hgrow="ALWAYS" />
+                    <Button fx:id="btnRecargar" disable="true" onAction="#recargar" styleClass="btn" text="Recargar" />
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                 </HBox>
+            <styleClass>
+               <String fx:value="header-box" />
+               <String fx:value="panel" />
+               <String fx:value="panel-primary" />
+            </styleClass>
             </VBox>
         </VBox>
     </top>
@@ -56,14 +62,22 @@
                     <padding>
                         <Insets bottom="16" left="16" right="16" top="16" />
                     </padding>
-                    <Label styleClass="section-title" text="Listado de libros" />
+                    <Label text="Listado de libros">
+                  <styleClass>
+                     <String fx:value="section-title" />
+                     <String fx:value="h2" />
+                  </styleClass></Label>
                     <ListView fx:id="librosListView" VBox.vgrow="ALWAYS" />
                 </VBox>
                 <VBox spacing="10" styleClass="panel-box">
                     <padding>
                         <Insets bottom="16" left="16" right="16" top="16" />
                     </padding>
-                    <Label styleClass="section-title" text="Detalle del libro" />
+                    <Label text="Detalle del libro">
+                  <styleClass>
+                     <String fx:value="section-title" />
+                     <String fx:value="h2" />
+                  </styleClass></Label>
                     <GridPane hgap="10" vgap="12">
                         <Label styleClass="field-label" text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                         <Label fx:id="detalleIdLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" />

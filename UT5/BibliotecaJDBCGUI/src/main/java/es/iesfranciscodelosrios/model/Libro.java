@@ -1,5 +1,7 @@
 package es.iesfranciscodelosrios.model;
 
+import java.util.Objects;
+
 public class Libro {
     private int idLibro;
     private String titulo;
@@ -45,5 +47,18 @@ public class Libro {
     @Override
     public String toString() {
         return "Libro{" + "idLibro=" + idLibro + ", titulo=" + titulo + ", ISBN=" + ISBN + ", autor=" + autor + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Autor)) return false;
+        Libro libro = (Libro) o;
+        return idLibro == libro.getIdLibro(); // o el campo identificador único
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idLibro);
     }
 }
